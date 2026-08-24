@@ -38,6 +38,14 @@ def build_data(csv_path='survey_data.csv'):
     # Weekly buckets — this survey's data window is short (~2.5 months),
     # so weekly gives a more readable trend than monthly.
     df['period'] = df['dt'].dt.to_period('W').apply(lambda p: p.start_time.strftime('%Y-%m-%d'))
+    df['segment_full'] = df['score'].apply(lambda v: bucket(v) if pd.notna(v) else None)
+
+    def clean_text(series):
+        s = series.astype(str).str.strip()
+        return s.mask(s.str.lower().isin(['-', '', 'nan']), '')
+
+    reason_text_full = clean_text(df[REASON_COL])
+    country_text_full = clean_text(df[COUNTRY_COL]).str.title()
 
     valid = df.dropna(subset=['score']).copy()
     valid['segment'] = valid['score'].apply(bucket)
@@ -89,6 +97,23 @@ def build_data(csv_path='survey_data.csv'):
     country_counts = country_series.value_counts().head(10)
     country_records = [{'country': k, 'count': int(v)} for k, v in country_counts.items()]
 
+    # Per-response records for client-side week filtering.
+    responses = [
+        {
+            'm': m if pd.notna(dtv) else '',
+            'd': dtv.strftime('%b %d, %Y') if pd.notna(dtv) else 'Unknown',
+            'iso': dtv.strftime('%Y-%m-%d') if pd.notna(dtv) else '0000-00-00',
+            's': (int(sc) if pd.notna(sc) else None),
+            'seg': (seg if isinstance(seg, str) else None),
+            'r': rt,
+            'c': ct,
+        }
+        for m, dtv, sc, seg, rt, ct in zip(
+            df['period'], df['dt'], df['score'], df['segment_full'], reason_text_full, country_text_full
+        )
+    ]
+    months = sorted(set(m for m in df['period'] if m and m != 'NaT'))
+
     return {
         'summary': {
             'total_responses': total_responses,
@@ -111,6 +136,9 @@ def build_data(csv_path='survey_data.csv'):
         'top_detractor_words': [{'word': w, 'count': c} for w, c in words.most_common(15)],
         'top_countries': country_records,
         'period_label': 'week',
+        'responses': responses,
+        'months': months,
+        'extra_kind': 'country',
     }
 
 

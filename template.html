@@ -94,7 +94,14 @@
   header.top p.sub { margin: 0; color: var(--text-secondary); font-size: 0.92rem; }
   header.top .meta { color: var(--text-muted); font-size: 0.82rem; margin-top: 6px; }
   header.top .meta a { color: var(--text-muted); }
-  .top-actions { display: flex; gap: 8px; align-items: center; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .month-filter { display: flex; align-items: center; gap: 6px; }
+  .month-filter-label { font-size: 0.78rem; color: var(--text-muted); }
+  select.month-select {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-primary);
+    border-radius: 8px; padding: 7px 10px; font-size: 0.82rem; cursor: pointer;
+  }
+  select.month-select:focus { outline: 2px solid var(--series-1); outline-offset: 1px; }
   button.theme-toggle {
     background: var(--surface-2); border: 1px solid var(--border); color: var(--text-secondary);
     border-radius: 8px; padding: 7px 12px; font-size: 0.82rem; cursor: pointer;
@@ -249,6 +256,10 @@
       <p class="meta">Data window: __DATE_START__ &ndash; __DATE_END__ &middot; Source: <a href="https://docs.google.com/spreadsheets/d/11gy7PvDe5V7queILqRFwM6UilMeRfCemJ1drMagRaRY" target="_blank" rel="noopener">Followspy NPS &ndash; Zonka</a> &middot; Generated __GENERATED_DATE__</p>
     </div>
     <div class="top-actions">
+      <div class="month-filter">
+        <label for="monthFilter" class="month-filter-label">Period</label>
+        <select class="month-select" id="monthFilter"></select>
+      </div>
       <button class="theme-toggle" id="themeToggle" type="button">&#9788; Theme</button>
     </div>
   </header>
@@ -284,7 +295,7 @@
     <div class="card">
       <div class="card-head">
         <h3>Promoters, Passives &amp; Detractors</h3>
-        <div class="desc">Share of the __SCORED__ scored responses</div>
+        <div class="desc" id="compositionDesc">Share of the __SCORED__ scored responses</div>
       </div>
       <div class="composition-bar" id="compositionBar"></div>
       <div class="legend" id="compositionLegend"></div>
@@ -335,7 +346,7 @@
     <div class="card">
       <div class="card-head">
         <h3>Top Countries by Response Volume</h3>
-        <div class="desc">__COUNTRIES_IDENTIFIED__ of __TOTAL__ responses include a country</div>
+        <div class="desc" id="geoDesc">__COUNTRIES_IDENTIFIED__ of __TOTAL__ responses include a country</div>
       </div>
       <div id="countryBars"></div>
     </div>
@@ -425,42 +436,95 @@ function npsStatus(v){
 }
 function fmtSigned(v){ return (v > 0 ? '+' : '') + v.toFixed(1); }
 
+// ================= filterable stats engine =================
+const STOPWORDS = new Set('the a an and to for is it of in on my i im with too very that this so not no be are was were get more your you have has had can does do did'.split(' '));
+
+function computeStats(filterKey){
+  const all = DATA.responses;
+  const rows = (filterKey === 'all') ? all : all.filter(r => r.m === filterKey);
+  const scored = rows.filter(r => r.s !== null);
+  const promoters = scored.filter(r => r.seg === 'Promoter').length;
+  const passives = scored.filter(r => r.seg === 'Passive').length;
+  const detractors = scored.filter(r => r.seg === 'Detractor').length;
+  const total_responses = rows.length;
+  const total_scored = scored.length;
+  const overall_nps = total_scored ? Math.round((promoters - detractors) / total_scored * 1000) / 10 : 0;
+  const completion_rate = total_responses ? Math.round(total_scored / total_responses * 1000) / 10 : 0;
+
+  const distMap = {};
+  scored.forEach(r => { distMap[r.s] = (distMap[r.s] || 0) + 1; });
+  const distribution = Object.keys(distMap).map(k => ({score: +k, count: distMap[k]})).sort((a,b) => a.score - b.score);
+
+  function topComments(seg, n){
+    return rows.filter(r => r.seg === seg && r.r)
+      .sort((a,b) => b.iso.localeCompare(a.iso))
+      .slice(0, n)
+      .map(r => ({date: r.d, score: r.s, text: r.r}));
+  }
+
+  const words = {};
+  rows.filter(r => r.seg === 'Detractor' && r.r).forEach(r => {
+    (r.r.toLowerCase().match(/[a-z']+/g) || []).forEach(w => {
+      if (!STOPWORDS.has(w) && w.length > 2) words[w] = (words[w] || 0) + 1;
+    });
+  });
+  const top_detractor_words = Object.entries(words).sort((a,b) => b[1]-a[1]).slice(0,15).map(([word,count]) => ({word,count}));
+
+  const countryCounts = {};
+  let countriesIdentified = 0;
+  rows.forEach(r => { if (r.c){ countryCounts[r.c] = (countryCounts[r.c]||0)+1; countriesIdentified++; } });
+  const top_countries = Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([country,count])=>({country,count}));
+
+  return {
+    summary: { total_responses, total_scored, completion_rate, promoters, passives, detractors, overall_nps },
+    distribution,
+    detractor_comments: topComments('Detractor', 15),
+    promoter_comments: topComments('Promoter', 15),
+    passive_comments: topComments('Passive', 15),
+    top_detractor_words,
+    top_countries,
+    countries_identified: countriesIdentified,
+  };
+}
+
 // ---------- stat tiles ----------
-(function(){
-  const s = DATA.summary;
-  const npsEl = document.getElementById('statNps');
-  npsEl.textContent = fmtSigned(s.overall_nps);
+function renderStatTiles(stats, filterKey){
+  const s = stats.summary;
   const status = npsStatus(s.overall_nps);
-  npsEl.classList.add(status);
+  const npsEl = document.getElementById('statNps');
+  npsEl.textContent = s.total_scored ? fmtSigned(s.overall_nps) : '—';
+  npsEl.className = 'value' + (s.total_scored ? ' ' + status : '');
   const pill = document.getElementById('statNpsPill');
-  pill.classList.add(status);
-  pill.textContent = status === 'good' ? 'Healthy range' : status === 'warning' ? 'Needs attention' : 'Critical';
+  pill.className = 'pill' + (s.total_scored ? ' ' + status : '');
+  pill.textContent = !s.total_scored ? 'No data' : (status === 'good' ? 'Healthy range' : status === 'warning' ? 'Needs attention' : 'Critical');
 
   document.getElementById('statTotal').textContent = s.total_responses.toLocaleString();
-  document.getElementById('statTotalFoot').textContent = s.date_range_start + ' – ' + s.date_range_end;
+  document.getElementById('statTotalFoot').textContent = (filterKey === 'all')
+    ? (DATA.summary.date_range_start + ' – ' + DATA.summary.date_range_end)
+    : monthLabel(filterKey);
   document.getElementById('statCompletion').textContent = s.completion_rate + '%';
   document.getElementById('statRatio').textContent = s.promoters + ' : ' + s.detractors;
   document.getElementById('statRatioFoot').textContent = s.passives + ' passives not counted in NPS';
-
-  document.querySelectorAll('#scoredCount, .scored-count').forEach(el => el.textContent = s.total_scored);
-})();
-document.querySelectorAll('body').forEach(()=>{});
-document.getElementById('compositionBar'); // noop anchor
-
-// fill template text nodes that used placeholders in markup via data attrs is avoided; direct DOM below.
-document.querySelectorAll('.desc').forEach(()=>{});
+}
 
 // ---------- composition bar ----------
-(function(){
-  const s = DATA.summary;
+function renderComposition(stats){
+  const s = stats.summary;
   const total = s.total_scored;
+  const bar = document.getElementById('compositionBar');
+  const legend = document.getElementById('compositionLegend');
+  bar.innerHTML = '';
+  legend.innerHTML = '';
+  document.getElementById('compositionDesc').textContent = 'Share of the ' + total.toLocaleString() + ' scored responses';
+  if (!total){
+    bar.innerHTML = '<div class="seg" style="width:100%;background:var(--grid)"><span style="color:var(--text-muted)">No scored responses</span></div>';
+    return;
+  }
   const segs = [
     {label: 'Promoters', count: s.promoters, color: COLORS.good},
     {label: 'Passives', count: s.passives, color: COLORS.warning},
     {label: 'Detractors', count: s.detractors, color: COLORS.critical},
   ];
-  const bar = document.getElementById('compositionBar');
-  const legend = document.getElementById('compositionLegend');
   segs.forEach(seg => {
     const pct = (seg.count/total*100);
     const div = document.createElement('div');
@@ -478,7 +542,7 @@ document.querySelectorAll('.desc').forEach(()=>{});
     li.innerHTML = '<span class="swatch" style="background:'+seg.color+'"></span>'+seg.label+' &middot; '+seg.count+' ('+pct.toFixed(1)+'%)';
     legend.appendChild(li);
   });
-})();
+}
 
 // ================= SVG chart builders =================
 
@@ -650,8 +714,19 @@ function renderVolume(){
 }
 
 // ---- Histogram: score distribution 0-10, colored by NPS segment ----
-function renderDistribution(){
-  const data = DATA.distribution;
+function renderDistribution(data){
+  const chartEl = document.getElementById('distChart');
+  const tableEl = document.getElementById('distTable');
+  const legendEl = document.getElementById('distLegend');
+  chartEl.innerHTML = '';
+  tableEl.innerHTML = '';
+  legendEl.innerHTML = '';
+
+  if (!data.length){
+    chartEl.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;margin:8px 0 0">No scored responses in this period.</p>';
+    return;
+  }
+
   const W = 940, H = 240, padL = 36, padR = 16, padT = 18, padB = 30;
   const plotW = W - padL - padR, plotH = H - padT - padB;
   const maxCount = Math.max(...data.map(d => d.count));
@@ -699,14 +774,13 @@ function renderDistribution(){
     svg.appendChild(hit);
   });
 
-  document.getElementById('distChart').appendChild(svg);
+  chartEl.appendChild(svg);
 
-  const legend = document.getElementById('distLegend');
   [['Detractor 0–6',COLORS.critical],['Passive 7–8',COLORS.warning],['Promoter 9–10',COLORS.good]].forEach(([label,color]) => {
     const li = document.createElement('div');
     li.className = 'legend-item';
     li.innerHTML = '<span class="swatch" style="background:'+color+'"></span>'+label;
-    legend.appendChild(li);
+    legendEl.appendChild(li);
   });
 
   const tbl = document.createElement('table');
@@ -719,12 +793,11 @@ function renderDistribution(){
     tbody.appendChild(tr);
   });
   tbl.appendChild(tbody);
-  document.getElementById('distTable').appendChild(tbl);
+  tableEl.appendChild(tbl);
 }
 
 renderNpsTrend();
 renderVolume();
-renderDistribution();
 
 // ---------- table toggles ----------
 document.querySelectorAll('.table-toggle').forEach(btn => {
@@ -741,52 +814,52 @@ document.querySelectorAll('.table-toggle').forEach(btn => {
 // ---------- voice of customer lists ----------
 function renderVocList(elId, items, scoreColorFn){
   const ul = document.getElementById(elId);
+  ul.innerHTML = '';
   if (!items.length){
     ul.innerHTML = '<li style="color:var(--text-muted)">No comments in this segment.</li>';
     return;
   }
   items.forEach(item => {
     const li = document.createElement('li');
-    const scoreHtml = (item.score !== undefined) ? '<span class="voc-score" style="color:'+scoreColorFn(item.score)+'">Score '+item.score+'</span>' : '';
+    const scoreHtml = (item.score !== undefined && item.score !== null) ? '<span class="voc-score" style="color:'+scoreColorFn(item.score)+'">Score '+item.score+'</span>' : '';
     li.innerHTML = '<div class="voc-meta"><span>'+item.date+'</span>'+scoreHtml+'</div><div class="voc-text"></div>';
     li.querySelector('.voc-text').textContent = item.text;
     ul.appendChild(li);
   });
 }
-renderVocList('detractorList', DATA.detractor_comments, () => COLORS.critical);
-renderVocList('promoterList', DATA.promoter_comments, () => COLORS.good);
 
 // ---------- top detractor words ----------
-(function(){
+function renderWords(words){
   const row = document.getElementById('wordsRow');
-  if (!DATA.top_detractor_words.length){
-    row.style.display = 'none';
-    return;
-  }
-  DATA.top_detractor_words.forEach(w => {
+  row.innerHTML = '';
+  if (!words.length){ row.style.display = 'none'; return; }
+  row.style.display = '';
+  words.forEach(w => {
     const chip = document.createElement('span');
     chip.className = 'word-chip';
     chip.innerHTML = w.word + '<span class="n">&times;'+w.count+'</span>';
     row.appendChild(chip);
   });
-})();
+}
 
 // ---------- recurring-theme callout ----------
-(function(){
+function renderCallout(words){
   const el = document.getElementById('themeCallout');
-  const words = DATA.top_detractor_words;
   if (!words.length){ el.style.display = 'none'; return; }
+  el.style.display = '';
   const top = words.slice(0,4).map(w => '"'+w.word+'"').join(', ');
   el.innerHTML = '<b>&#9888;&nbsp;Recurring theme:</b>&nbsp;<span>Detractor comments most often mention '+top+' &mdash; worth a closer read in the comments to the left before prioritizing fixes.</span>';
-})();
+}
 
 // ---------- top countries ----------
-(function(){
+function renderCountries(countries, countriesIdentified, totalResponses){
   const el = document.getElementById('countryBars');
+  const desc = document.getElementById('geoDesc');
+  if (desc) desc.textContent = countriesIdentified.toLocaleString() + ' of ' + totalResponses.toLocaleString() + ' responses include a country';
   if (!el) return;
-  const countries = DATA.top_countries || [];
+  el.innerHTML = '';
   if (!countries.length){
-    el.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;margin:8px 0 0">No country data available for this survey.</p>';
+    el.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;margin:8px 0 0">No country data available for this period.</p>';
     return;
   }
   const max = Math.max(...countries.map(c => c.count));
@@ -801,7 +874,39 @@ renderVocList('promoterList', DATA.promoter_comments, () => COLORS.good);
       (showInside ? '' : '<div class="count-outside">'+c.count+'</div>');
     el.appendChild(row);
   });
-})();
+}
+
+// ---------- month filter ----------
+function populateMonthFilter(){
+  const sel = document.getElementById('monthFilter');
+  const months = (DATA.months || []).slice().sort().reverse();
+  const optAll = document.createElement('option');
+  optAll.value = 'all';
+  optAll.textContent = 'All time';
+  sel.appendChild(optAll);
+  months.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = monthLabel(m);
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', () => applyFilter(sel.value));
+}
+
+function applyFilter(filterKey){
+  const stats = computeStats(filterKey);
+  renderStatTiles(stats, filterKey);
+  renderComposition(stats);
+  renderDistribution(stats.distribution);
+  renderVocList('detractorList', stats.detractor_comments, () => COLORS.critical);
+  renderVocList('promoterList', stats.promoter_comments, () => COLORS.good);
+  renderWords(stats.top_detractor_words);
+  renderCallout(stats.top_detractor_words);
+  renderCountries(stats.top_countries, stats.countries_identified, stats.summary.total_responses);
+}
+
+populateMonthFilter();
+applyFilter('all');
 </script>
 </body>
 </html>
