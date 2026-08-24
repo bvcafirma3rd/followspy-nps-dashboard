@@ -1,0 +1,499 @@
+{
+  "summary": {
+    "total_responses": 1000,
+    "total_scored": 474,
+    "completion_rate": 47.4,
+    "promoters": 166,
+    "passives": 23,
+    "detractors": 285,
+    "overall_nps": -25.1,
+    "date_range_start": "Jun 11, 2026",
+    "date_range_end": "Aug 24, 2026",
+    "countries_identified": 648
+  },
+  "monthly": [
+    {
+      "month": "2026-06-08",
+      "total": 33,
+      "promoters": 12,
+      "passives": 2,
+      "detractors": 19,
+      "nps": -21.2
+    },
+    {
+      "month": "2026-06-15",
+      "total": 84,
+      "promoters": 21,
+      "passives": 2,
+      "detractors": 61,
+      "nps": -47.6
+    },
+    {
+      "month": "2026-06-22",
+      "total": 86,
+      "promoters": 32,
+      "passives": 9,
+      "detractors": 45,
+      "nps": -15.1
+    },
+    {
+      "month": "2026-06-29",
+      "total": 83,
+      "promoters": 24,
+      "passives": 3,
+      "detractors": 56,
+      "nps": -38.6
+    },
+    {
+      "month": "2026-07-06",
+      "total": 46,
+      "promoters": 18,
+      "passives": 3,
+      "detractors": 25,
+      "nps": -15.2
+    },
+    {
+      "month": "2026-07-13",
+      "total": 25,
+      "promoters": 9,
+      "passives": 0,
+      "detractors": 16,
+      "nps": -28.0
+    },
+    {
+      "month": "2026-07-20",
+      "total": 39,
+      "promoters": 19,
+      "passives": 2,
+      "detractors": 18,
+      "nps": 2.6
+    },
+    {
+      "month": "2026-07-27",
+      "total": 33,
+      "promoters": 11,
+      "passives": 1,
+      "detractors": 21,
+      "nps": -30.3
+    },
+    {
+      "month": "2026-08-03",
+      "total": 14,
+      "promoters": 5,
+      "passives": 1,
+      "detractors": 8,
+      "nps": -21.4
+    },
+    {
+      "month": "2026-08-10",
+      "total": 14,
+      "promoters": 7,
+      "passives": 0,
+      "detractors": 7,
+      "nps": 0.0
+    },
+    {
+      "month": "2026-08-17",
+      "total": 16,
+      "promoters": 7,
+      "passives": 0,
+      "detractors": 9,
+      "nps": -12.5
+    },
+    {
+      "month": "2026-08-24",
+      "total": 1,
+      "promoters": 1,
+      "passives": 0,
+      "detractors": 0,
+      "nps": 100.0
+    }
+  ],
+  "distribution": [
+    {
+      "score": 0,
+      "count": 223
+    },
+    {
+      "score": 1,
+      "count": 17
+    },
+    {
+      "score": 2,
+      "count": 10
+    },
+    {
+      "score": 3,
+      "count": 7
+    },
+    {
+      "score": 4,
+      "count": 7
+    },
+    {
+      "score": 5,
+      "count": 18
+    },
+    {
+      "score": 6,
+      "count": 3
+    },
+    {
+      "score": 7,
+      "count": 8
+    },
+    {
+      "score": 8,
+      "count": 15
+    },
+    {
+      "score": 9,
+      "count": 11
+    },
+    {
+      "score": 10,
+      "count": 155
+    }
+  ],
+  "volume": [
+    {
+      "month": "2026-06-08",
+      "count": 63
+    },
+    {
+      "month": "2026-06-15",
+      "count": 162
+    },
+    {
+      "month": "2026-06-22",
+      "count": 146
+    },
+    {
+      "month": "2026-06-29",
+      "count": 163
+    },
+    {
+      "month": "2026-07-06",
+      "count": 105
+    },
+    {
+      "month": "2026-07-13",
+      "count": 62
+    },
+    {
+      "month": "2026-07-20",
+      "count": 96
+    },
+    {
+      "month": "2026-07-27",
+      "count": 64
+    },
+    {
+      "month": "2026-08-03",
+      "count": 51
+    },
+    {
+      "month": "2026-08-10",
+      "count": 35
+    },
+    {
+      "month": "2026-08-17",
+      "count": 48
+    },
+    {
+      "month": "2026-08-24",
+      "count": 5
+    }
+  ],
+  "detractor_comments": [
+    {
+      "date": "Aug 23, 2026",
+      "score": 0,
+      "text": "Highly potential scam"
+    },
+    {
+      "date": "Aug 21, 2026",
+      "score": 0,
+      "text": "i payed to review private profile, and you telling me you cannot, plss refund my money"
+    },
+    {
+      "date": "Aug 20, 2026",
+      "score": 0,
+      "text": "It charged me twice and I don\u2019t have acesss"
+    },
+    {
+      "date": "Aug 19, 2026",
+      "score": 1,
+      "text": "not good"
+    },
+    {
+      "date": "Aug 15, 2026",
+      "score": 0,
+      "text": "Spam"
+    },
+    {
+      "date": "Aug 10, 2026",
+      "score": 2,
+      "text": "Lists don't always update"
+    },
+    {
+      "date": "Aug 08, 2026",
+      "score": 2,
+      "text": "like"
+    },
+    {
+      "date": "Aug 03, 2026",
+      "score": 0,
+      "text": "Tou cannot access private account then whats spy?"
+    },
+    {
+      "date": "Jul 31, 2026",
+      "score": 0,
+      "text": "Hello"
+    },
+    {
+      "date": "Jul 31, 2026",
+      "score": 0,
+      "text": "Very disgusting"
+    },
+    {
+      "date": "Jul 28, 2026",
+      "score": 3,
+      "text": "You can\u2019t see private stories"
+    },
+    {
+      "date": "Jul 28, 2026",
+      "score": 0,
+      "text": "it's not free for first time"
+    },
+    {
+      "date": "Jul 27, 2026",
+      "score": 4,
+      "text": "Good"
+    },
+    {
+      "date": "Jul 27, 2026",
+      "score": 0,
+      "text": "you took my money and didn\u2019t show me shit"
+    },
+    {
+      "date": "Jul 26, 2026",
+      "score": 0,
+      "text": "it promised i could see the stories of this person I COULD LITERALLY SEE THEM when theyre private and it didnt show me."
+    }
+  ],
+  "promoter_comments": [
+    {
+      "date": "Aug 22, 2026",
+      "score": 10,
+      "text": "Done"
+    },
+    {
+      "date": "Aug 22, 2026",
+      "score": 10,
+      "text": "."
+    },
+    {
+      "date": "Aug 13, 2026",
+      "score": 10,
+      "text": "s"
+    },
+    {
+      "date": "Aug 10, 2026",
+      "score": 9,
+      "text": "a"
+    },
+    {
+      "date": "Aug 10, 2026",
+      "score": 10,
+      "text": "a"
+    },
+    {
+      "date": "Aug 05, 2026",
+      "score": 10,
+      "text": "very good"
+    },
+    {
+      "date": "Aug 04, 2026",
+      "score": 10,
+      "text": "It works"
+    },
+    {
+      "date": "Jul 28, 2026",
+      "score": 10,
+      "text": "Good"
+    },
+    {
+      "date": "Jul 27, 2026",
+      "score": 10,
+      "text": "Girls girl"
+    },
+    {
+      "date": "Jul 26, 2026",
+      "score": 9,
+      "text": "Never used befors"
+    },
+    {
+      "date": "Jul 24, 2026",
+      "score": 10,
+      "text": "Gas"
+    },
+    {
+      "date": "Jul 22, 2026",
+      "score": 10,
+      "text": "Great set up"
+    },
+    {
+      "date": "Jul 22, 2026",
+      "score": 10,
+      "text": "Nothing"
+    },
+    {
+      "date": "Jul 20, 2026",
+      "score": 10,
+      "text": "10"
+    },
+    {
+      "date": "Jul 20, 2026",
+      "score": 9,
+      "text": "Wow"
+    }
+  ],
+  "passive_comments": [
+    {
+      "date": "Jul 28, 2026",
+      "score": 8,
+      "text": "Fast and easy"
+    },
+    {
+      "date": "Jul 05, 2026",
+      "score": 7,
+      "text": "7"
+    },
+    {
+      "date": "Jun 26, 2026",
+      "score": 8,
+      "text": "Dont know"
+    },
+    {
+      "date": "Jun 24, 2026",
+      "score": 7,
+      "text": "Fhjj"
+    },
+    {
+      "date": "Jun 22, 2026",
+      "score": 7,
+      "text": "Utility"
+    },
+    {
+      "date": "Jun 19, 2026",
+      "score": 8,
+      "text": "https://www.instagram.com/doaatarek55?igsh=ZzB5ODJ3cXZuc21l"
+    }
+  ],
+  "top_detractor_words": [
+    {
+      "word": "private",
+      "count": 20
+    },
+    {
+      "word": "account",
+      "count": 13
+    },
+    {
+      "word": "see",
+      "count": 11
+    },
+    {
+      "word": "scam",
+      "count": 7
+    },
+    {
+      "word": "money",
+      "count": 6
+    },
+    {
+      "word": "accounts",
+      "count": 6
+    },
+    {
+      "word": "free",
+      "count": 5
+    },
+    {
+      "word": "when",
+      "count": 5
+    },
+    {
+      "word": "cannot",
+      "count": 4
+    },
+    {
+      "word": "then",
+      "count": 4
+    },
+    {
+      "word": "cant",
+      "count": 4
+    },
+    {
+      "word": "paid",
+      "count": 4
+    },
+    {
+      "word": "said",
+      "count": 4
+    },
+    {
+      "word": "even",
+      "count": 4
+    },
+    {
+      "word": "access",
+      "count": 3
+    }
+  ],
+  "top_countries": [
+    {
+      "country": "India",
+      "count": 91
+    },
+    {
+      "country": "Turkey",
+      "count": 36
+    },
+    {
+      "country": "Mexico",
+      "count": 35
+    },
+    {
+      "country": "Argentina",
+      "count": 33
+    },
+    {
+      "country": "Pakistan",
+      "count": 24
+    },
+    {
+      "country": "Indonesia",
+      "count": 22
+    },
+    {
+      "country": "Thailand",
+      "count": 22
+    },
+    {
+      "country": "Brazil",
+      "count": 21
+    },
+    {
+      "country": "Spain",
+      "count": 19
+    },
+    {
+      "country": "Germany",
+      "count": 18
+    }
+  ],
+  "period_label": "week"
+}

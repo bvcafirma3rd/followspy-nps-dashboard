@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FollowSpy &middot; NPS Dashboard</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --surface-2: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;   /* blue */
+    --series-1-soft: rgba(42,120,214,0.14);
+    --status-good: #0ca30c;
+    --status-good-soft: rgba(12,163,12,0.14);
+    --status-warning: #d98c00;
+    --status-warning-soft: rgba(250,178,25,0.20);
+    --status-critical: #d03b3b;
+    --status-critical-soft: rgba(208,59,59,0.14);
+    --success-text: #006300;
+    --shadow: 0 1px 2px rgba(11,11,11,0.06), 0 1px 12px rgba(11,11,11,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --surface-2: #201f1e;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #8f8d87;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-1-soft: rgba(57,135,229,0.20);
+      --status-good: #0ca30c;
+      --status-good-soft: rgba(12,163,12,0.20);
+      --status-warning: #fab219;
+      --status-warning-soft: rgba(250,178,25,0.20);
+      --status-critical: #e66767;
+      --status-critical-soft: rgba(230,103,103,0.20);
+      --success-text: #0ca30c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 16px rgba(0,0,0,0.35);
+    }
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --surface-2: #201f1e;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8d87;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-1-soft: rgba(57,135,229,0.20);
+    --status-good: #0ca30c;
+    --status-good-soft: rgba(12,163,12,0.20);
+    --status-warning: #fab219;
+    --status-warning-soft: rgba(250,178,25,0.20);
+    --status-critical: #e66767;
+    --status-critical-soft: rgba(230,103,103,0.20);
+    --success-text: #0ca30c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 16px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  header.top {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  header.top h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header.top p.sub { margin: 0; color: var(--text-secondary); font-size: 0.92rem; }
+  header.top .meta { color: var(--text-muted); font-size: 0.82rem; margin-top: 6px; }
+  header.top .meta a { color: var(--text-muted); }
+  .top-actions { display: flex; gap: 8px; align-items: center; }
+  button.theme-toggle {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-secondary);
+    border-radius: 8px; padding: 7px 12px; font-size: 0.82rem; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  button.theme-toggle:hover { color: var(--text-primary); }
+
+  section { margin-bottom: 34px; }
+  h2.section-title {
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-muted); margin: 0 0 12px; font-weight: 600;
+  }
+
+  .stat-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  @media (max-width: 860px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-tile {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .stat-tile .label { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px; }
+  .stat-tile .value { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-tile .value.good { color: var(--status-good); }
+  .stat-tile .value.warning { color: var(--status-warning); }
+  .stat-tile .value.critical { color: var(--status-critical); }
+  .stat-tile .foot { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; margin-top: 8px;
+  }
+  .pill.good { color: var(--status-good); background: var(--status-good-soft); }
+  .pill.warning { color: var(--status-warning); background: var(--status-warning-soft); }
+  .pill.critical { color: var(--status-critical); background: var(--status-critical-soft); }
+
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 22px; box-shadow: var(--shadow);
+  }
+  .card-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    margin-bottom: 4px; flex-wrap: wrap;
+  }
+  .card-head h3 { font-size: 1rem; margin: 0; font-weight: 600; }
+  .card-head .desc { font-size: 0.82rem; color: var(--text-muted); }
+  .table-toggle {
+    background: none; border: 1px solid var(--border); color: var(--text-secondary);
+    border-radius: 6px; padding: 4px 9px; font-size: 0.74rem; cursor: pointer; white-space: nowrap;
+  }
+  .table-toggle:hover { color: var(--text-primary); }
+
+  .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; align-items: stretch; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  svg.chart { width: 100%; height: auto; display: block; overflow: visible; font-family: inherit; }
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+  .baseline { stroke: var(--baseline); stroke-width: 1; }
+  .axis-label { fill: var(--text-muted); font-size: 10.5px; }
+  .data-label { fill: var(--text-secondary); font-size: 10.5px; font-weight: 600; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 2px 0; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary); }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+
+  .composition-bar {
+    display: flex; height: 34px; border-radius: 8px; overflow: hidden; margin-top: 14px;
+    border: 1px solid var(--border);
+  }
+  .composition-bar .seg { display: flex; align-items: center; justify-content: center; color: #fff;
+    font-size: 0.78rem; font-weight: 700; min-width: 0; }
+  .composition-bar .seg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 6px; }
+
+  .tooltip {
+    position: fixed; pointer-events: none; z-index: 50;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 11px; font-size: 0.78rem; color: var(--text-primary); box-shadow: var(--shadow);
+    max-width: 240px; opacity: 0; transform: translate(-50%, calc(-100% - 10px)); transition: opacity 0.08s;
+  }
+  .tooltip.show { opacity: 1; }
+  .tooltip .tt-title { font-weight: 700; margin-bottom: 3px; }
+  .tooltip .tt-row { display: flex; justify-content: space-between; gap: 14px; color: var(--text-secondary); }
+  .tooltip .tt-row b { color: var(--text-primary); }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 10px; }
+  .data-table th, .data-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); }
+  .data-table th:first-child, .data-table td:first-child { text-align: left; }
+  .data-table th { color: var(--text-muted); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .data-table td { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .voc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .voc-grid.two { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 980px) { .voc-grid { grid-template-columns: 1fr; } }
+
+  .country-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .country-row .name { width: 110px; flex: none; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+  .country-row .track { flex: 1; background: var(--grid); border-radius: 5px; height: 20px; position: relative; overflow: hidden; }
+  .country-row .fill { height: 100%; background: var(--series-1); border-radius: 5px; display: flex; align-items: center; }
+  .country-row .fill span { color: #fff; font-size: 0.72rem; font-weight: 700; padding-left: 8px; white-space: nowrap; }
+  .country-row .count-outside { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); padding-left: 8px; }
+  .voc-col h3 {
+    font-size: 0.88rem; margin: 0 0 10px; display: flex; align-items: center; gap: 7px;
+  }
+  .voc-col h3 .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .voc-list { list-style: none; margin: 0; padding: 0; max-height: 420px; overflow-y: auto; }
+  .voc-list li {
+    padding: 10px 0; border-bottom: 1px solid var(--grid); font-size: 0.85rem;
+  }
+  .voc-list li:last-child { border-bottom: none; }
+  .voc-list .voc-meta {
+    display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 3px;
+  }
+  .voc-score { font-weight: 700; }
+  .voc-text { color: var(--text-primary); }
+
+  .words-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .word-chip {
+    display: inline-flex; align-items: baseline; gap: 6px; background: var(--status-critical-soft);
+    color: var(--status-critical); padding: 5px 11px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;
+  }
+  [data-theme="dark"] .word-chip, @media (prefers-color-scheme: dark) { }
+  .word-chip .n { font-weight: 400; opacity: 0.75; font-size: 0.74rem; }
+
+  .callout {
+    display: flex; gap: 10px; align-items: flex-start; background: var(--status-warning-soft);
+    border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 0.84rem;
+    color: var(--text-secondary); margin-top: 14px;
+  }
+  .callout b { color: var(--text-primary); }
+
+  footer {
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.78rem; display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px;
+  }
+  footer a { color: var(--text-muted); }
+
+  .hidden { display: none !important; }
+  @media (max-width: 600px) {
+    .stat-tile .value { font-size: 1.5rem; }
+    .wrap { padding: 20px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>FollowSpy &middot; NPS Dashboard</h1>
+      <p class="sub">Net Promoter Score performance from Zonka customer surveys</p>
+      <p class="meta">Data window: __DATE_START__ &ndash; __DATE_END__ &middot; Source: <a href="https://docs.google.com/spreadsheets/d/11gy7PvDe5V7queILqRFwM6UilMeRfCemJ1drMagRaRY" target="_blank" rel="noopener">Followspy NPS &ndash; Zonka</a> &middot; Generated __GENERATED_DATE__</p>
+    </div>
+    <div class="top-actions">
+      <button class="theme-toggle" id="themeToggle" type="button">&#9788; Theme</button>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="section-title">Overview</h2>
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="label">Overall NPS</div>
+        <div class="value" id="statNps">&mdash;</div>
+        <div class="pill" id="statNpsPill">&mdash;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Total Responses</div>
+        <div class="value" id="statTotal">&mdash;</div>
+        <div class="foot" id="statTotalFoot">&nbsp;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Survey Completion</div>
+        <div class="value" id="statCompletion">&mdash;</div>
+        <div class="foot">Responses with a completed 0&ndash;10 score</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Promoters : Detractors</div>
+        <div class="value" id="statRatio">&mdash;</div>
+        <div class="foot" id="statRatioFoot">&nbsp;</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Respondent Composition</h2>
+    <div class="card">
+      <div class="card-head">
+        <h3>Promoters, Passives &amp; Detractors</h3>
+        <div class="desc">Share of the __SCORED__ scored responses</div>
+      </div>
+      <div class="composition-bar" id="compositionBar"></div>
+      <div class="legend" id="compositionLegend"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Trend</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <h3>Weekly NPS</h3>
+          <button class="table-toggle" data-target="npsTrendTable" data-chart="npsTrendChart">Table view</button>
+        </div>
+        <div class="desc">(Promoters &minus; Detractors) &divide; Scored responses, per week</div>
+        <div id="npsTrendChart"></div>
+        <div id="npsTrendTable" class="hidden"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>Response Volume &amp; Mix</h3>
+          <button class="table-toggle" data-target="volumeTable" data-chart="volumeChart">Table view</button>
+        </div>
+        <div class="desc">Scored responses per week by segment</div>
+        <div id="volumeChart"></div>
+        <div id="volumeTable" class="hidden"></div>
+        <div class="legend" id="volumeLegend"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Score Detail</h2>
+    <div class="card">
+      <div class="card-head">
+        <h3>Score Distribution (0&ndash;10)</h3>
+        <button class="table-toggle" data-target="distTable" data-chart="distChart">Table view</button>
+      </div>
+      <div class="desc">Count of responses at each recommendation score</div>
+      <div id="distChart"></div>
+      <div id="distTable" class="hidden"></div>
+      <div class="legend" id="distLegend"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Geography</h2>
+    <div class="card">
+      <div class="card-head">
+        <h3>Top Countries by Response Volume</h3>
+        <div class="desc">__COUNTRIES_IDENTIFIED__ of __TOTAL__ responses include a country</div>
+      </div>
+      <div id="countryBars"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Voice of Customer</h2>
+    <div class="card">
+      <div class="voc-grid two">
+        <div class="voc-col">
+          <h3><span class="dot" style="background:var(--status-critical)"></span>Detractor comments (0&ndash;6)</h3>
+          <ul class="voc-list" id="detractorList"></ul>
+        </div>
+        <div class="voc-col">
+          <h3><span class="dot" style="background:var(--status-good)"></span>Promoter comments (9&ndash;10)</h3>
+          <ul class="voc-list" id="promoterList"></ul>
+        </div>
+      </div>
+      <div class="words-row" id="wordsRow"></div>
+      <div class="callout" id="themeCallout"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Built from Zonka survey export &middot; __TOTAL__ total responses, __SCORED__ scored &middot; refresh by re-running <code>build.py</code> with a new export</span>
+    <span>NPS = %Promoters &minus; %Detractors</span>
+  </footer>
+
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script id="nps-data" type="application/json">__NPS_DATA_JSON__</script>
+<script>
+const DATA = JSON.parse(document.getElementById('nps-data').textContent);
+const COLORS = {
+  good: getVar('--status-good'), goodSoft: getVar('--status-good-soft'),
+  warning: getVar('--status-warning'), warningSoft: getVar('--status-warning-soft'),
+  critical: getVar('--status-critical'), criticalSoft: getVar('--status-critical-soft'),
+  series1: getVar('--series-1'), series1Soft: getVar('--series-1-soft'),
+  grid: getVar('--grid'), baseline: getVar('--baseline'), muted: getVar('--text-muted'),
+  secondary: getVar('--text-secondary'), primary: getVar('--text-primary'), surface: getVar('--surface-1')
+};
+function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+// ---------- theme toggle ----------
+(function(){
+  const btn = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('nps-theme');
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const next = (cur === 'dark' || (!cur && prefersDark)) ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('nps-theme', next);
+    location.reload();
+  });
+})();
+
+// ---------- tooltip ----------
+const tooltipEl = document.getElementById('tooltip');
+function showTooltip(x, y, html){
+  tooltipEl.innerHTML = html;
+  tooltipEl.style.left = x + 'px';
+  tooltipEl.style.top = y + 'px';
+  tooltipEl.classList.add('show');
+}
+function hideTooltip(){ tooltipEl.classList.remove('show'); }
+
+// ---------- helpers ----------
+const PERIOD_LABEL = DATA.period_label || 'month';
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function monthLabel(key){
+  if (PERIOD_LABEL === 'week'){
+    // key is an ISO date string (week start), e.g. 2026-06-08
+    const d = new Date(key + 'T00:00:00Z');
+    return MONTH_NAMES[d.getUTCMonth()] + ' ' + d.getUTCDate();
+  }
+  const [y,m] = key.split('-');
+  return MONTH_NAMES[parseInt(m,10)-1] + " '" + y.slice(2);
+}
+function npsStatus(v){
+  if (v >= 30) return 'good';
+  if (v >= 0) return 'warning';
+  return 'critical';
+}
+function fmtSigned(v){ return (v > 0 ? '+' : '') + v.toFixed(1); }
+
+// ---------- stat tiles ----------
+(function(){
+  const s = DATA.summary;
+  const npsEl = document.getElementById('statNps');
+  npsEl.textContent = fmtSigned(s.overall_nps);
+  const status = npsStatus(s.overall_nps);
+  npsEl.classList.add(status);
+  const pill = document.getElementById('statNpsPill');
+  pill.classList.add(status);
+  pill.textContent = status === 'good' ? 'Healthy range' : status === 'warning' ? 'Needs attention' : 'Critical';
+
+  document.getElementById('statTotal').textContent = s.total_responses.toLocaleString();
+  document.getElementById('statTotalFoot').textContent = s.date_range_start + ' – ' + s.date_range_end;
+  document.getElementById('statCompletion').textContent = s.completion_rate + '%';
+  document.getElementById('statRatio').textContent = s.promoters + ' : ' + s.detractors;
+  document.getElementById('statRatioFoot').textContent = s.passives + ' passives not counted in NPS';
+
+  document.querySelectorAll('#scoredCount, .scored-count').forEach(el => el.textContent = s.total_scored);
+})();
+document.querySelectorAll('body').forEach(()=>{});
+document.getElementById('compositionBar'); // noop anchor
+
+// fill template text nodes that used placeholders in markup via data attrs is avoided; direct DOM below.
+document.querySelectorAll('.desc').forEach(()=>{});
+
+// ---------- composition bar ----------
+(function(){
+  const s = DATA.summary;
+  const total = s.total_scored;
+  const segs = [
+    {label: 'Promoters', count: s.promoters, color: COLORS.good},
+    {label: 'Passives', count: s.passives, color: COLORS.warning},
+    {label: 'Detractors', count: s.detractors, color: COLORS.critical},
+  ];
+  const bar = document.getElementById('compositionBar');
+  const legend = document.getElementById('compositionLegend');
+  segs.forEach(seg => {
+    const pct = (seg.count/total*100);
+    const div = document.createElement('div');
+    div.className = 'seg';
+    div.style.width = pct + '%';
+    div.style.background = seg.color;
+    div.innerHTML = '<span>' + (pct >= 20 ? seg.label + ' ' + pct.toFixed(0) + '%' : pct.toFixed(0)+'%') + '</span>';
+    div.addEventListener('mousemove', e => showTooltip(e.clientX, e.clientY,
+      '<div class="tt-title">'+seg.label+'</div><div class="tt-row"><span>Responses</span><b>'+seg.count+'</b></div><div class="tt-row"><span>Share</span><b>'+pct.toFixed(1)+'%</b></div>'));
+    div.addEventListener('mouseleave', hideTooltip);
+    bar.appendChild(div);
+
+    const li = document.createElement('div');
+    li.className = 'legend-item';
+    li.innerHTML = '<span class="swatch" style="background:'+seg.color+'"></span>'+seg.label+' &middot; '+seg.count+' ('+pct.toFixed(1)+'%)';
+    legend.appendChild(li);
+  });
+})();
+
+// ================= SVG chart builders =================
+
+function svgEl(tag, attrs){
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+// ---- Line chart with area fill: monthly NPS ----
+function renderNpsTrend(){
+  const data = DATA.monthly;
+  const W = 620, H = 260, padL = 40, padR = 16, padT = 18, padB = 30;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const vals = data.map(d => d.nps);
+  const min = Math.min(0, ...vals), max = Math.max(0, ...vals);
+  const span = (max - min) || 1;
+  const yPad = span * 0.18;
+  const yMin = min - yPad, yMax = max + yPad;
+  const x = i => padL + (i/(data.length-1)) * plotW;
+  const y = v => padT + plotH - ((v - yMin)/(yMax-yMin)) * plotH;
+
+  const svg = svgEl('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, role:'img', 'aria-label':'Monthly NPS trend line chart'});
+
+  // gridlines (4 horizontal)
+  const steps = 4;
+  for (let i=0;i<=steps;i++){
+    const v = yMin + (i/steps)*(yMax-yMin);
+    const yy = y(v);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:yy, y2:yy, class:'grid-line'}));
+    const t = svgEl('text', {x:padL-8, y:yy+3, class:'axis-label', 'text-anchor':'end'});
+    t.textContent = Math.round(v);
+    svg.appendChild(t);
+  }
+  // zero baseline emphasized
+  if (yMin < 0 && yMax > 0){
+    const yy = y(0);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:yy, y2:yy, class:'baseline'}));
+  }
+
+  // area path
+  let areaD = `M ${x(0)} ${y(0)} `;
+  data.forEach((d,i) => areaD += `L ${x(i)} ${y(d.nps)} `);
+  areaD += `L ${x(data.length-1)} ${y(0)} Z`;
+  svg.appendChild(svgEl('path', {d: areaD, fill: COLORS.series1Soft, stroke:'none'}));
+
+  // line path
+  let lineD = '';
+  data.forEach((d,i) => lineD += (i===0?'M ':'L ') + x(i) + ' ' + y(d.nps) + ' ');
+  svg.appendChild(svgEl('path', {d: lineD, fill:'none', stroke: COLORS.series1, 'stroke-width':2, 'stroke-linejoin':'round', 'stroke-linecap':'round'}));
+
+  // x labels
+  data.forEach((d,i) => {
+    if (i % Math.ceil(data.length/8) === 0 || i === data.length-1){
+      const t = svgEl('text', {x:x(i), y:H-8, class:'axis-label', 'text-anchor':'middle'});
+      t.textContent = monthLabel(d.month);
+      svg.appendChild(t);
+    }
+  });
+
+  // points + hover targets
+  data.forEach((d,i) => {
+    const c = svgEl('circle', {cx:x(i), cy:y(d.nps), r:3.5, fill: COLORS.series1, stroke: COLORS.surface, 'stroke-width':1.5});
+    svg.appendChild(c);
+    const hit = svgEl('rect', {x:x(i)-(plotW/data.length/2), y:padT, width:plotW/data.length, height:plotH, fill:'transparent', style:'cursor:pointer'});
+    hit.addEventListener('mousemove', e => showTooltip(e.clientX, e.clientY,
+      '<div class="tt-title">'+monthLabel(d.month)+'</div>'+
+      '<div class="tt-row"><span>NPS</span><b>'+fmtSigned(d.nps)+'</b></div>'+
+      '<div class="tt-row"><span>Promoters</span><b>'+d.promoters+'</b></div>'+
+      '<div class="tt-row"><span>Passives</span><b>'+d.passives+'</b></div>'+
+      '<div class="tt-row"><span>Detractors</span><b>'+d.detractors+'</b></div>'+
+      '<div class="tt-row"><span>Total scored</span><b>'+d.total+'</b></div>'));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+
+  document.getElementById('npsTrendChart').appendChild(svg);
+
+  // table view
+  const tbl = document.createElement('table');
+  tbl.className = 'data-table';
+  tbl.innerHTML = '<thead><tr><th>Month</th><th>NPS</th><th>Promoters</th><th>Passives</th><th>Detractors</th><th>Total</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  data.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${monthLabel(d.month)}</td><td>${fmtSigned(d.nps)}</td><td>${d.promoters}</td><td>${d.passives}</td><td>${d.detractors}</td><td>${d.total}</td>`;
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+  document.getElementById('npsTrendTable').appendChild(tbl);
+}
+
+// ---- Stacked bar chart: monthly volume by segment ----
+function renderVolume(){
+  const data = DATA.monthly;
+  const W = 620, H = 260, padL = 36, padR = 16, padT = 18, padB = 30;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const maxTotal = Math.max(...data.map(d => d.total));
+  const yMax = Math.ceil(maxTotal/20)*20 || 10;
+  const bw = plotW/data.length * 0.62;
+  const x = i => padL + (i+0.5)/data.length*plotW;
+  const y = v => padT + plotH - (v/yMax)*plotH;
+
+  const svg = svgEl('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, role:'img', 'aria-label':'Monthly response volume by segment, stacked bar chart'});
+  const steps = 4;
+  for (let i=0;i<=steps;i++){
+    const v = (i/steps)*yMax;
+    const yy = y(v);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:yy, y2:yy, class:'grid-line'}));
+    const t = svgEl('text', {x:padL-8, y:yy+3, class:'axis-label', 'text-anchor':'end'});
+    t.textContent = Math.round(v);
+    svg.appendChild(t);
+  }
+  svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y(0), y2:y(0), class:'baseline'}));
+
+  data.forEach((d,i) => {
+    const cx = x(i);
+    const segs = [
+      {v:d.promoters, color:COLORS.good, label:'Promoters'},
+      {v:d.passives, color:COLORS.warning, label:'Passives'},
+      {v:d.detractors, color:COLORS.critical, label:'Detractors'},
+    ];
+    let base = 0;
+    segs.forEach(seg => {
+      if (seg.v <= 0) return;
+      const yTop = y(base+seg.v), yBase = y(base);
+      const rect = svgEl('rect', {x:cx-bw/2, y:yTop, width:bw, height: Math.max(0,yBase-yTop), fill:seg.color, rx:2});
+      svg.appendChild(rect);
+      base += seg.v;
+    });
+    const hit = svgEl('rect', {x:cx-plotW/data.length/2, y:padT, width:plotW/data.length, height:plotH, fill:'transparent', style:'cursor:pointer'});
+    hit.addEventListener('mousemove', e => showTooltip(e.clientX, e.clientY,
+      '<div class="tt-title">'+monthLabel(d.month)+'</div>'+
+      '<div class="tt-row"><span>Promoters</span><b>'+d.promoters+'</b></div>'+
+      '<div class="tt-row"><span>Passives</span><b>'+d.passives+'</b></div>'+
+      '<div class="tt-row"><span>Detractors</span><b>'+d.detractors+'</b></div>'+
+      '<div class="tt-row"><span>Total</span><b>'+d.total+'</b></div>'));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+
+    if (i % Math.ceil(data.length/8) === 0 || i === data.length-1){
+      const t = svgEl('text', {x:cx, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+      t.textContent = monthLabel(d.month);
+      svg.appendChild(t);
+    }
+  });
+
+  document.getElementById('volumeChart').appendChild(svg);
+
+  const legend = document.getElementById('volumeLegend');
+  [['Promoters',COLORS.good],['Passives',COLORS.warning],['Detractors',COLORS.critical]].forEach(([label,color]) => {
+    const li = document.createElement('div');
+    li.className = 'legend-item';
+    li.innerHTML = '<span class="swatch" style="background:'+color+'"></span>'+label;
+    legend.appendChild(li);
+  });
+
+  const tbl = document.createElement('table');
+  tbl.className = 'data-table';
+  tbl.innerHTML = '<thead><tr><th>Month</th><th>Promoters</th><th>Passives</th><th>Detractors</th><th>Total</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  data.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${monthLabel(d.month)}</td><td>${d.promoters}</td><td>${d.passives}</td><td>${d.detractors}</td><td>${d.total}</td>`;
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+  document.getElementById('volumeTable').appendChild(tbl);
+}
+
+// ---- Histogram: score distribution 0-10, colored by NPS segment ----
+function renderDistribution(){
+  const data = DATA.distribution;
+  const W = 940, H = 240, padL = 36, padR = 16, padT = 18, padB = 30;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const maxCount = Math.max(...data.map(d => d.count));
+  const yMax = Math.ceil(maxCount/50)*50 || 10;
+  const bw = plotW/data.length*0.6;
+  const x = i => padL + (i+0.5)/data.length*plotW;
+  const y = v => padT + plotH - (v/yMax)*plotH;
+
+  function colorFor(score){
+    if (score >= 9) return COLORS.good;
+    if (score >= 7) return COLORS.warning;
+    return COLORS.critical;
+  }
+
+  const svg = svgEl('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, role:'img', 'aria-label':'Score distribution histogram, 0 to 10'});
+  const steps = 4;
+  for (let i=0;i<=steps;i++){
+    const v = (i/steps)*yMax;
+    const yy = y(v);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:yy, y2:yy, class:'grid-line'}));
+    const t = svgEl('text', {x:padL-8, y:yy+3, class:'axis-label', 'text-anchor':'end'});
+    t.textContent = Math.round(v);
+    svg.appendChild(t);
+  }
+  svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y(0), y2:y(0), class:'baseline'}));
+
+  data.forEach((d,i) => {
+    const cx = x(i);
+    const yTop = y(d.count), yBase = y(0);
+    const rect = svgEl('rect', {x:cx-bw/2, y:yTop, width:bw, height:Math.max(0,yBase-yTop), fill:colorFor(d.score), rx:3});
+    svg.appendChild(rect);
+
+    const lbl = svgEl('text', {x:cx, y:yTop-6, class:'data-label', 'text-anchor':'middle'});
+    lbl.textContent = d.count;
+    svg.appendChild(lbl);
+
+    const t = svgEl('text', {x:cx, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+    t.textContent = d.score;
+    svg.appendChild(t);
+
+    const hit = svgEl('rect', {x:cx-plotW/data.length/2, y:padT, width:plotW/data.length, height:plotH, fill:'transparent', style:'cursor:pointer'});
+    hit.addEventListener('mousemove', e => showTooltip(e.clientX, e.clientY,
+      '<div class="tt-title">Score '+d.score+'</div><div class="tt-row"><span>Responses</span><b>'+d.count+'</b></div>'));
+    hit.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(hit);
+  });
+
+  document.getElementById('distChart').appendChild(svg);
+
+  const legend = document.getElementById('distLegend');
+  [['Detractor 0–6',COLORS.critical],['Passive 7–8',COLORS.warning],['Promoter 9–10',COLORS.good]].forEach(([label,color]) => {
+    const li = document.createElement('div');
+    li.className = 'legend-item';
+    li.innerHTML = '<span class="swatch" style="background:'+color+'"></span>'+label;
+    legend.appendChild(li);
+  });
+
+  const tbl = document.createElement('table');
+  tbl.className = 'data-table';
+  tbl.innerHTML = '<thead><tr><th>Score</th><th>Responses</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  data.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d.score}</td><td>${d.count}</td>`;
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+  document.getElementById('distTable').appendChild(tbl);
+}
+
+renderNpsTrend();
+renderVolume();
+renderDistribution();
+
+// ---------- table toggles ----------
+document.querySelectorAll('.table-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tableEl = document.getElementById(btn.dataset.target);
+    const chartEl = document.getElementById(btn.dataset.chart);
+    const showingTable = !tableEl.classList.contains('hidden');
+    tableEl.classList.toggle('hidden', showingTable);
+    chartEl.classList.toggle('hidden', !showingTable);
+    btn.textContent = showingTable ? 'Table view' : 'Chart view';
+  });
+});
+
+// ---------- voice of customer lists ----------
+function renderVocList(elId, items, scoreColorFn){
+  const ul = document.getElementById(elId);
+  if (!items.length){
+    ul.innerHTML = '<li style="color:var(--text-muted)">No comments in this segment.</li>';
+    return;
+  }
+  items.forEach(item => {
+    const li = document.createElement('li');
+    const scoreHtml = (item.score !== undefined) ? '<span class="voc-score" style="color:'+scoreColorFn(item.score)+'">Score '+item.score+'</span>' : '';
+    li.innerHTML = '<div class="voc-meta"><span>'+item.date+'</span>'+scoreHtml+'</div><div class="voc-text"></div>';
+    li.querySelector('.voc-text').textContent = item.text;
+    ul.appendChild(li);
+  });
+}
+renderVocList('detractorList', DATA.detractor_comments, () => COLORS.critical);
+renderVocList('promoterList', DATA.promoter_comments, () => COLORS.good);
+
+// ---------- top detractor words ----------
+(function(){
+  const row = document.getElementById('wordsRow');
+  if (!DATA.top_detractor_words.length){
+    row.style.display = 'none';
+    return;
+  }
+  DATA.top_detractor_words.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.innerHTML = w.word + '<span class="n">&times;'+w.count+'</span>';
+    row.appendChild(chip);
+  });
+})();
+
+// ---------- recurring-theme callout ----------
+(function(){
+  const el = document.getElementById('themeCallout');
+  const words = DATA.top_detractor_words;
+  if (!words.length){ el.style.display = 'none'; return; }
+  const top = words.slice(0,4).map(w => '"'+w.word+'"').join(', ');
+  el.innerHTML = '<b>&#9888;&nbsp;Recurring theme:</b>&nbsp;<span>Detractor comments most often mention '+top+' &mdash; worth a closer read in the comments to the left before prioritizing fixes.</span>';
+})();
+
+// ---------- top countries ----------
+(function(){
+  const el = document.getElementById('countryBars');
+  if (!el) return;
+  const countries = DATA.top_countries || [];
+  if (!countries.length){
+    el.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;margin:8px 0 0">No country data available for this survey.</p>';
+    return;
+  }
+  const max = Math.max(...countries.map(c => c.count));
+  countries.forEach(c => {
+    const pct = (c.count/max*100);
+    const row = document.createElement('div');
+    row.className = 'country-row';
+    const showInside = pct >= 22;
+    row.innerHTML =
+      '<div class="name">'+c.country+'</div>'+
+      '<div class="track"><div class="fill" style="width:'+pct+'%">'+(showInside ? '<span>'+c.count+'</span>' : '')+'</div></div>'+
+      (showInside ? '' : '<div class="count-outside">'+c.count+'</div>');
+    el.appendChild(row);
+  });
+})();
+</script>
+</body>
+</html>
