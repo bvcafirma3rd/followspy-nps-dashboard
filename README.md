@@ -37,9 +37,9 @@ export ("Followspy NPS – Zonka"). Published via GitHub Pages.
 
 - **NPS** = %Promoters (score 9–10) − %Detractors (score 0–6), among
   responses that completed the 0–10 recommendation question.
-- Trend is aggregated **weekly** (not monthly) since this survey's data
-  window is short — weekly gives a more readable trend line. Adjust the
-  `.dt.to_period('W')` call in `build.py` back to `'M'` if the data window
-  grows long enough that monthly makes more sense.
+- Trend is aggregated **monthly**, matching the RecentFollow dashboard. If
+  the data window is ever too short for a readable monthly trend, switch
+  `build.py`'s `.dt.to_period('M')` call back to `'W'` (and `period_label`
+  back to `'week'`) for a more readable weekly trend line instead.
 - Responses that didn't answer the score question still count toward total
   response volume and completion rate, but not toward NPS itself.

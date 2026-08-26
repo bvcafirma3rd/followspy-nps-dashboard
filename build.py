@@ -19,6 +19,10 @@ from datetime import datetime, timezone
 SCORE_COL = 'On a scale of 0 to 10, how likely are you to recommend Followspy?'
 REASON_COL = 'What is the primary reason for your score?'
 COUNTRY_COL = 'Contact Country'
+# Trend/volume are bucketed monthly (matching the RecentFollow dashboard). If the
+# data window ever gets too short for a readable monthly trend, switch back to
+# weekly by changing df['period'] below to `.dt.to_period('W')...` and
+# period_label to 'week'.
 
 
 def bucket(score):
@@ -35,9 +39,7 @@ def build_data(csv_path='survey_data.csv'):
     df[COUNTRY_COL] = df[COUNTRY_COL].fillna('-').astype(str)
     df['score'] = pd.to_numeric(df[SCORE_COL], errors='coerce')
     df['dt'] = pd.to_datetime(df['Date & Time'], errors='coerce')
-    # Weekly buckets — this survey's data window is short (~2.5 months),
-    # so weekly gives a more readable trend than monthly.
-    df['period'] = df['dt'].dt.to_period('W').apply(lambda p: p.start_time.strftime('%Y-%m-%d'))
+    df['period'] = df['dt'].dt.to_period('M').astype(str)
     df['segment_full'] = df['score'].apply(lambda v: bucket(v) if pd.notna(v) else None)
 
     def clean_text(series):
@@ -57,14 +59,14 @@ def build_data(csv_path='survey_data.csv'):
     detractors = int((valid['segment'] == 'Detractor').sum())
     overall_nps = round((promoters - detractors) / total_scored * 100, 1) if total_scored else 0.0
 
-    weekly = valid.groupby('period').agg(
+    monthly = valid.groupby('period').agg(
         total=('score', 'count'),
         promoters=('segment', lambda x: int((x == 'Promoter').sum())),
         passives=('segment', lambda x: int((x == 'Passive').sum())),
         detractors=('segment', lambda x: int((x == 'Detractor').sum())),
     ).reset_index().rename(columns={'period': 'month'})
-    weekly['nps'] = ((weekly['promoters'] - weekly['detractors']) / weekly['total'] * 100).round(1)
-    weekly_records = weekly.to_dict('records')
+    monthly['nps'] = ((monthly['promoters'] - monthly['detractors']) / monthly['total'] * 100).round(1)
+    monthly_records = monthly.to_dict('records')
 
     dist = valid['score'].value_counts().sort_index()
     dist_records = [{'score': int(k), 'count': int(v)} for k, v in dist.items()]
@@ -97,7 +99,7 @@ def build_data(csv_path='survey_data.csv'):
     country_counts = country_series.value_counts().head(10)
     country_records = [{'country': k, 'count': int(v)} for k, v in country_counts.items()]
 
-    # Per-response records for client-side week filtering.
+    # Per-response records for client-side month filtering.
     responses = [
         {
             'm': m if pd.notna(dtv) else '',
@@ -127,7 +129,7 @@ def build_data(csv_path='survey_data.csv'):
             'date_range_end': df['dt'].max().strftime('%b %d, %Y'),
             'countries_identified': int((df[COUNTRY_COL].str.strip() != '-').sum()),
         },
-        'monthly': weekly_records,
+        'monthly': monthly_records,
         'distribution': dist_records,
         'volume': volume_records,
         'detractor_comments': top_comments('Detractor', 15),
@@ -135,7 +137,7 @@ def build_data(csv_path='survey_data.csv'):
         'passive_comments': top_comments('Passive', 15),
         'top_detractor_words': [{'word': w, 'count': c} for w, c in words.most_common(15)],
         'top_countries': country_records,
-        'period_label': 'week',
+        'period_label': 'month',
         'responses': responses,
         'months': months,
         'extra_kind': 'country',
