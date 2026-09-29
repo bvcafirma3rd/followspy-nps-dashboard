@@ -1,15 +1,15 @@
 {
   "summary": {
-    "total_responses": 1000,
-    "total_scored": 474,
-    "completion_rate": 47.4,
-    "promoters": 166,
-    "passives": 23,
-    "detractors": 285,
-    "overall_nps": -25.1,
+    "total_responses": 1110,
+    "total_scored": 550,
+    "completion_rate": 49.5,
+    "promoters": 193,
+    "passives": 29,
+    "detractors": 328,
+    "overall_nps": -24.5,
     "date_range_start": "Jun 11, 2026",
-    "date_range_end": "Aug 24, 2026",
-    "countries_identified": 648
+    "date_range_end": "Sep 29, 2026",
+    "countries_identified": 726
   },
   "monthly": [
     {
@@ -30,41 +30,49 @@
     },
     {
       "month": "2026-08",
-      "total": 50,
-      "promoters": 22,
-      "passives": 1,
-      "detractors": 27,
-      "nps": -10.0
+      "total": 67,
+      "promoters": 29,
+      "passives": 2,
+      "detractors": 36,
+      "nps": -10.4
+    },
+    {
+      "month": "2026-09",
+      "total": 59,
+      "promoters": 20,
+      "passives": 5,
+      "detractors": 34,
+      "nps": -23.7
     }
   ],
   "distribution": [
     {
       "score": 0,
-      "count": 223
+      "count": 253
     },
     {
       "score": 1,
-      "count": 17
+      "count": 19
     },
     {
       "score": 2,
-      "count": 10
+      "count": 11
     },
     {
       "score": 3,
-      "count": 7
+      "count": 10
     },
     {
       "score": 4,
-      "count": 7
+      "count": 9
     },
     {
       "score": 5,
-      "count": 18
+      "count": 21
     },
     {
       "score": 6,
-      "count": 3
+      "count": 5
     },
     {
       "score": 7,
@@ -72,15 +80,15 @@
     },
     {
       "score": 8,
-      "count": 15
+      "count": 21
     },
     {
       "score": 9,
-      "count": 11
+      "count": 14
     },
     {
       "score": 10,
-      "count": 155
+      "count": 179
     }
   ],
   "volume": [
@@ -94,10 +102,44 @@
     },
     {
       "month": "2026-08",
-      "count": 148
+      "count": 178
+    },
+    {
+      "month": "2026-09",
+      "count": 80
     }
   ],
   "detractor_comments": [
+    {
+      "date": "Sep 29, 2026",
+      "score": 0,
+      "text": "Hard to cancel"
+    },
+    {
+      "date": "Sep 25, 2026",
+      "score": 0,
+      "text": "It isn\u2019t showing me the most recent following"
+    },
+    {
+      "date": "Sep 19, 2026",
+      "score": 0,
+      "text": "I aleeady paid"
+    },
+    {
+      "date": "Sep 04, 2026",
+      "score": 5,
+      "text": "I havent used it yet"
+    },
+    {
+      "date": "Aug 31, 2026",
+      "score": 0,
+      "text": "Need to upgrade\ud83d\ude44"
+    },
+    {
+      "date": "Aug 31, 2026",
+      "score": 0,
+      "text": "Why wouldn\u2019t you tell me before i paid that you can\u2019t look at private accounts"
+    },
     {
       "date": "Aug 23, 2026",
       "score": 0,
@@ -142,39 +184,49 @@
       "date": "Jul 31, 2026",
       "score": 0,
       "text": "Hello"
-    },
-    {
-      "date": "Jul 31, 2026",
-      "score": 0,
-      "text": "Very disgusting"
-    },
-    {
-      "date": "Jul 28, 2026",
-      "score": 3,
-      "text": "You can\u2019t see private stories"
-    },
-    {
-      "date": "Jul 28, 2026",
-      "score": 0,
-      "text": "it's not free for first time"
-    },
-    {
-      "date": "Jul 27, 2026",
-      "score": 4,
-      "text": "Good"
-    },
-    {
-      "date": "Jul 27, 2026",
-      "score": 0,
-      "text": "you took my money and didn\u2019t show me shit"
-    },
-    {
-      "date": "Jul 26, 2026",
-      "score": 0,
-      "text": "it promised i could see the stories of this person I COULD LITERALLY SEE THEM when theyre private and it didnt show me."
     }
   ],
   "promoter_comments": [
+    {
+      "date": "Sep 21, 2026",
+      "score": 10,
+      "text": "okay"
+    },
+    {
+      "date": "Sep 16, 2026",
+      "score": 10,
+      "text": "Good Experiance"
+    },
+    {
+      "date": "Sep 14, 2026",
+      "score": 10,
+      "text": "Heard great tings"
+    },
+    {
+      "date": "Sep 10, 2026",
+      "score": 10,
+      "text": "Reliable"
+    },
+    {
+      "date": "Sep 01, 2026",
+      "score": 9,
+      "text": "Nmsjh"
+    },
+    {
+      "date": "Aug 31, 2026",
+      "score": 10,
+      "text": "Vvcc"
+    },
+    {
+      "date": "Aug 29, 2026",
+      "score": 10,
+      "text": "werf"
+    },
+    {
+      "date": "Aug 25, 2026",
+      "score": 10,
+      "text": "Really good"
+    },
     {
       "date": "Aug 22, 2026",
       "score": 10,
@@ -209,49 +261,29 @@
       "date": "Aug 04, 2026",
       "score": 10,
       "text": "It works"
-    },
-    {
-      "date": "Jul 28, 2026",
-      "score": 10,
-      "text": "Good"
-    },
-    {
-      "date": "Jul 27, 2026",
-      "score": 10,
-      "text": "Girls girl"
-    },
-    {
-      "date": "Jul 26, 2026",
-      "score": 9,
-      "text": "Never used befors"
-    },
-    {
-      "date": "Jul 24, 2026",
-      "score": 10,
-      "text": "Gas"
-    },
-    {
-      "date": "Jul 22, 2026",
-      "score": 10,
-      "text": "Great set up"
-    },
-    {
-      "date": "Jul 22, 2026",
-      "score": 10,
-      "text": "Nothing"
-    },
-    {
-      "date": "Jul 20, 2026",
-      "score": 10,
-      "text": "10"
-    },
-    {
-      "date": "Jul 20, 2026",
-      "score": 9,
-      "text": "Wow"
     }
   ],
   "passive_comments": [
+    {
+      "date": "Sep 23, 2026",
+      "score": 8,
+      "text": "da"
+    },
+    {
+      "date": "Sep 22, 2026",
+      "score": 8,
+      "text": "okay"
+    },
+    {
+      "date": "Sep 16, 2026",
+      "score": 8,
+      "text": "gy"
+    },
+    {
+      "date": "Aug 27, 2026",
+      "score": 8,
+      "text": "Good"
+    },
     {
       "date": "Jul 28, 2026",
       "score": 8,
@@ -286,7 +318,7 @@
   "top_detractor_words": [
     {
       "word": "private",
-      "count": 20
+      "count": 21
     },
     {
       "word": "account",
@@ -301,11 +333,15 @@
       "count": 7
     },
     {
+      "word": "accounts",
+      "count": 7
+    },
+    {
       "word": "money",
       "count": 6
     },
     {
-      "word": "accounts",
+      "word": "paid",
       "count": 6
     },
     {
@@ -329,10 +365,6 @@
       "count": 4
     },
     {
-      "word": "paid",
-      "count": 4
-    },
-    {
       "word": "said",
       "count": 4
     },
@@ -348,43 +380,43 @@
   "top_countries": [
     {
       "country": "India",
-      "count": 91
-    },
-    {
-      "country": "Turkey",
-      "count": 36
+      "count": 99
     },
     {
       "country": "Mexico",
-      "count": 35
+      "count": 40
+    },
+    {
+      "country": "Turkey",
+      "count": 39
     },
     {
       "country": "Argentina",
-      "count": 33
+      "count": 34
     },
     {
       "country": "Pakistan",
-      "count": 24
+      "count": 30
     },
     {
       "country": "Indonesia",
-      "count": 22
+      "count": 26
+    },
+    {
+      "country": "Spain",
+      "count": 24
     },
     {
       "country": "Thailand",
+      "count": 23
+    },
+    {
+      "country": "Germany",
       "count": 22
     },
     {
       "country": "Brazil",
       "count": 21
-    },
-    {
-      "country": "Spain",
-      "count": 19
-    },
-    {
-      "country": "Germany",
-      "count": 18
     }
   ],
   "period_label": "month",
@@ -9388,12 +9420,1003 @@
       "seg": null,
       "r": "",
       "c": "Brazil"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Kuwait"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Ukraine"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Mexico"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "Really good",
+      "c": "Australia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Yemen"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Armenia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Peru"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Spain"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 25, 2026",
+      "iso": "2026-08-25",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Spain"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 26, 2026",
+      "iso": "2026-08-26",
+      "s": 9,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Sweden"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 26, 2026",
+      "iso": "2026-08-26",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Indonesia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 26, 2026",
+      "iso": "2026-08-26",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Indonesia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 26, 2026",
+      "iso": "2026-08-26",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Thailand"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 26, 2026",
+      "iso": "2026-08-26",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 27, 2026",
+      "iso": "2026-08-27",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Malaysia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 27, 2026",
+      "iso": "2026-08-27",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Azerbaijan"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 27, 2026",
+      "iso": "2026-08-27",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 27, 2026",
+      "iso": "2026-08-27",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Bulgaria"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 27, 2026",
+      "iso": "2026-08-27",
+      "s": 8,
+      "seg": "Passive",
+      "r": "Good",
+      "c": "Mexico"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 28, 2026",
+      "iso": "2026-08-28",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Australia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 28, 2026",
+      "iso": "2026-08-28",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 29, 2026",
+      "iso": "2026-08-29",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "werf",
+      "c": "Turkey"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 29, 2026",
+      "iso": "2026-08-29",
+      "s": 3,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 30, 2026",
+      "iso": "2026-08-30",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Indonesia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 30, 2026",
+      "iso": "2026-08-30",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 31, 2026",
+      "iso": "2026-08-31",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 31, 2026",
+      "iso": "2026-08-31",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "Why wouldn\u2019t you tell me before i paid that you can\u2019t look at private accounts",
+      "c": "Australia"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 31, 2026",
+      "iso": "2026-08-31",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "Need to upgrade\ud83d\ude44",
+      "c": "Philippines"
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 31, 2026",
+      "iso": "2026-08-31",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-08",
+      "d": "Aug 31, 2026",
+      "iso": "2026-08-31",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "Vvcc",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 01, 2026",
+      "iso": "2026-09-01",
+      "s": 1,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Turkey"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 01, 2026",
+      "iso": "2026-09-01",
+      "s": 9,
+      "seg": "Promoter",
+      "r": "Nmsjh",
+      "c": "Morocco"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 01, 2026",
+      "iso": "2026-09-01",
+      "s": 8,
+      "seg": "Passive",
+      "r": "",
+      "c": "Japan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 01, 2026",
+      "iso": "2026-09-01",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Norway"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 03, 2026",
+      "iso": "2026-09-03",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Norway"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 04, 2026",
+      "iso": "2026-09-04",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Italy"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 04, 2026",
+      "iso": "2026-09-04",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Norway"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 04, 2026",
+      "iso": "2026-09-04",
+      "s": 5,
+      "seg": "Detractor",
+      "r": "I havent used it yet",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 04, 2026",
+      "iso": "2026-09-04",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 04, 2026",
+      "iso": "2026-09-04",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": 9,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Switzerland"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": 3,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 06, 2026",
+      "iso": "2026-09-06",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Netherlands"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 07, 2026",
+      "iso": "2026-09-07",
+      "s": 5,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 07, 2026",
+      "iso": "2026-09-07",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 07, 2026",
+      "iso": "2026-09-07",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Mexico"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 07, 2026",
+      "iso": "2026-09-07",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Colombia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 08, 2026",
+      "iso": "2026-09-08",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Morocco"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 09, 2026",
+      "iso": "2026-09-09",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Indonesia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 09, 2026",
+      "iso": "2026-09-09",
+      "s": 4,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 09, 2026",
+      "iso": "2026-09-09",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Peru"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 10, 2026",
+      "iso": "2026-09-10",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "Reliable",
+      "c": "Jordan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 10, 2026",
+      "iso": "2026-09-10",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Netherlands"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 10, 2026",
+      "iso": "2026-09-10",
+      "s": 3,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Mexico"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 10, 2026",
+      "iso": "2026-09-10",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Japan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 10, 2026",
+      "iso": "2026-09-10",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Spain"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Canada"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": 2,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Mexico"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Germany"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Germany"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 11, 2026",
+      "iso": "2026-09-11",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Colombia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 12, 2026",
+      "iso": "2026-09-12",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 12, 2026",
+      "iso": "2026-09-12",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 13, 2026",
+      "iso": "2026-09-13",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Germany"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 13, 2026",
+      "iso": "2026-09-13",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Sweden"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 13, 2026",
+      "iso": "2026-09-13",
+      "s": 1,
+      "seg": "Detractor",
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 13, 2026",
+      "iso": "2026-09-13",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Netherlands"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 13, 2026",
+      "iso": "2026-09-13",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Colombia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 14, 2026",
+      "iso": "2026-09-14",
+      "s": 4,
+      "seg": "Detractor",
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 14, 2026",
+      "iso": "2026-09-14",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "Heard great tings",
+      "c": "Ireland"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 14, 2026",
+      "iso": "2026-09-14",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 14, 2026",
+      "iso": "2026-09-14",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "France"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 15, 2026",
+      "iso": "2026-09-15",
+      "s": 5,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 16, 2026",
+      "iso": "2026-09-16",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 15, 2026",
+      "iso": "2026-09-15",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Argentina"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 16, 2026",
+      "iso": "2026-09-16",
+      "s": 6,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Malaysia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 16, 2026",
+      "iso": "2026-09-16",
+      "s": 8,
+      "seg": "Passive",
+      "r": "gy",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 16, 2026",
+      "iso": "2026-09-16",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "Good Experiance",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 17, 2026",
+      "iso": "2026-09-17",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Germany"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 17, 2026",
+      "iso": "2026-09-17",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Colombia"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 17, 2026",
+      "iso": "2026-09-17",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 18, 2026",
+      "iso": "2026-09-18",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 19, 2026",
+      "iso": "2026-09-19",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 19, 2026",
+      "iso": "2026-09-19",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "I aleeady paid",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 20, 2026",
+      "iso": "2026-09-20",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 20, 2026",
+      "iso": "2026-09-20",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 20, 2026",
+      "iso": "2026-09-20",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Spain"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 21, 2026",
+      "iso": "2026-09-21",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "okay",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 22, 2026",
+      "iso": "2026-09-22",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 21, 2026",
+      "iso": "2026-09-21",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Chile"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 22, 2026",
+      "iso": "2026-09-22",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 22, 2026",
+      "iso": "2026-09-22",
+      "s": 8,
+      "seg": "Passive",
+      "r": "okay",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 23, 2026",
+      "iso": "2026-09-23",
+      "s": 8,
+      "seg": "Passive",
+      "r": "da",
+      "c": "Pakistan"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 23, 2026",
+      "iso": "2026-09-23",
+      "s": 6,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Switzerland"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 23, 2026",
+      "iso": "2026-09-23",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Turkey"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 23, 2026",
+      "iso": "2026-09-23",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Italy"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 25, 2026",
+      "iso": "2026-09-25",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "It isn\u2019t showing me the most recent following",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 26, 2026",
+      "iso": "2026-09-26",
+      "s": 8,
+      "seg": "Passive",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 27, 2026",
+      "iso": "2026-09-27",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "Italy"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 28, 2026",
+      "iso": "2026-09-28",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": "India"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 28, 2026",
+      "iso": "2026-09-28",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "",
+      "c": ""
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 28, 2026",
+      "iso": "2026-09-28",
+      "s": null,
+      "seg": null,
+      "r": "",
+      "c": "Spain"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 28, 2026",
+      "iso": "2026-09-28",
+      "s": 10,
+      "seg": "Promoter",
+      "r": "",
+      "c": "Belgium"
+    },
+    {
+      "m": "2026-09",
+      "d": "Sep 29, 2026",
+      "iso": "2026-09-29",
+      "s": 0,
+      "seg": "Detractor",
+      "r": "Hard to cancel",
+      "c": ""
     }
   ],
   "months": [
     "2026-06",
     "2026-07",
-    "2026-08"
+    "2026-08",
+    "2026-09"
   ],
   "extra_kind": "country"
 }
